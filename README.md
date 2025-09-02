@@ -73,7 +73,7 @@ This project enables:
         <version>1.22.0</version> <!-- Must match the downloaded DLL version -->
     </dependency>
 </dependencies>
-
+```
 ---
 
 ### Step 5: Fix ONNX Model Inputs (if needed)
@@ -88,6 +88,7 @@ If the ONNX model input structure is incompatible with ONNX Runtime, use the off
 
 ```bash
 python remove_initializer_from_input.py --input modelnew2_onnx.onnx --output modelnew.onnx
+```
 
 ## 🧪 Validate ONNX Installation (Optional)
 
@@ -95,29 +96,31 @@ Install or upgrade ONNX:
 
 ```bash
 pip install --upgrade --force-reinstall onnx
+```
 # or using conda
+```bash
 conda install -c conda-forge onnx
-
+```
 
 ### Then test in Python:
-
+```bash
 python -c "import onnx; print(onnx.ModelProto)"
-
+```
 
 ### Expected output:
-
+```bash
 <class 'onnx.onnx_ml_pb2.ModelProto'>
-
+```
 ### 🚀 Run the Project
 
 Ensure your JDK configuration is consistent across your IDE.
 
 IntelliJ IDEA:
-
+```bash
 File > Project Structure > Project > Project SDK
 
 File > Settings > Build, Execution, Deployment > Compiler > Java Compiler
-
+```
 Run the application:
 mvn spring-boot:run
 
@@ -126,31 +129,23 @@ Or run the main class directly from IntelliJ.
 
 ### 🧠 Model Information
 
-Uses lightweight MobileFaceNet ONNX model
-
-Suitable for embedded systems and server-side deployment
-
-Outputs 512-dimensional feature vectors for similarity comparison
+1. Uses lightweight MobileFaceNet ONNX model
+2. Suitable for embedded systems and server-side deployment
+3. Outputs 512-dimensional feature vectors for similarity comparison
 
 ### 📦 Dependencies
 
-Java 17
-
-Maven
-
-ONNX Runtime 1.22.0 (Java API)
-
-Microsoft VC++ Redistributable
-
-MobileFaceNet ONNX model
+1. Java 17
+2. Maven
+3. ONNX Runtime 1.22.0 (Java API)
+4. Microsoft VC++ Redistributable
+5. MobileFaceNet ONNX model
 
 ### 🔗 Useful Resources
 
-ONNX Runtime Documentation
-
-InsightFace GitHub
-
-ONNX Model Zoo
+1. ONNX Runtime Documentation
+2. InsightFace GitHub
+3. ONNX Model Zoo
 
 ### 📜 License
 
