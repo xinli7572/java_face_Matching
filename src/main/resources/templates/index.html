@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>单次人脸识别（视频不停止）</title>
+    <style>
+
+
+        #all-container {
+            width: 1000px;
+            display: flex; /* 使用 flex 实现水平布局 */
+            justify-content: center; /* 居中对齐，可选 */
+            gap: 10px; /* 图片之间的间距，可选 */
+        }
+
+        #container {
+            position: relative;
+            width: 340px;
+            height: 280px;
+        }
+
+        #image-container {
+            width: 700px;
+            display: flex; /* 使用 flex 实现水平布局 */
+            justify-content: center; /* 居中对齐，可选 */
+            gap: 10px; /* 图片之间的间距，可选 */
+        }
+
+        #smallimage-container {
+            width: 700px;
+            display: flex; /* 使用 flex 实现水平布局 */
+            justify-content: center; /* 居中对齐，可选 */
+            gap: 10px; /* 图片之间的间距，可选 */
+        }
+
+        #list-container {
+            width: 700px;
+            display: flex; /* 使用 flex 实现水平布局 */
+            justify-content: center; /* 居中对齐，可选 */
+            gap: 10px; /* 图片之间的间距，可选 */
+        }
+
+        #video, #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #controls {
+            margin-top: 500px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column; /* 纵向排列 */
+            gap: 10px; /* 按钮之间的间距 */
+            width: 200px; /* 你原来的宽度 */
+            font-size: 30px;
+            margin-top: 30px;
+        }
+
+        .button-group .detectBtn {
+            width: 200px;
+            height: 50px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Face Recognition</h1>
+<div id="all-container">
+    <div>
+        <div class="button-group" width="300">
+            <button class="detectBtn" data-action="face_1">Face Recognition 1</button>
+            <button class="detectBtn" data-action="face_2">Face Recognition 2</button>
+            <button class="detectBtn" data-action="face_3">Face Recognition 3</button>
+            <button class="detectBtn" data-action="face_4">Face Recognition 4</button>
+        </div>
+    </div>
+
+
+    <div width="1300">
+        <div id="image-container">
+            <div id="container">
+                <video id="video" width="340" height="280" autoplay muted></video>
+                <canvas id="canvas" width="340" height="280"></canvas>
+            </div>
+            <div width="340" height="240" style="margin-top: 14px">
+                <img id="resultImage_3" width="340" height="255"/>
+            </div>
+        </div>
+        <div id="smallimage-container">
+            <div width="340">
+                <img id="resultImage_1" width="100"/>
+            </div>
+            <div width="340">
+                <img id="resultImage_2" width="100"/>
+            </div>
+        </div>
+        <div id="list-container">
+            <div id="cos" style="font-size: 22px; font-weight:bold"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const detectBtn = document.getElementById("detectOnce");
+
+    // 启动摄像头
+    navigator.mediaDevices.getUserMedia({video: true})
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => {
+            console.error("无法访问摄像头: ", err);
+        });
+
+    document.querySelectorAll(".detectBtn").forEach(button => {
+        button.addEventListener("click", () => {
+            const action = button.dataset.action; // 获取自定义参数
+
+            // 创建一个离屏 canvas 来抓帧（不影响可见 canvas）
+            const offCanvas = document.createElement("canvas");
+            offCanvas.width = video.videoWidth || 340;
+            offCanvas.height = video.videoHeight || 280;
+            const offCtx = offCanvas.getContext("2d");
+            offCtx.drawImage(video, 0, 0, offCanvas.width, offCanvas.height);
+
+            // 提取图像数据
+            const imageData = offCanvas.toDataURL("image/png");
+
+            // 发送到后端识别人脸
+            fetch('/image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({image: imageData, action: action})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 清空已有的框
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    if (Array.isArray(data.boxes)) {
+                        ctx.strokeStyle = 'red';
+                        ctx.lineWidth = 2;
+                        data.boxes.forEach(box => {
+                            ctx.strokeRect(box.x, box.y, box.width, box.height);
+                            document.getElementById("resultImage_1").src = box.image_1;
+                            document.getElementById("resultImage_2").src = box.image_2;
+                            document.getElementById("resultImage_3").src = box.image_3;
+                            document.getElementById("cos").innerText = box.cos;
+                        });
+                    } else {
+                        console.warn("识别失败或格式不对");
+                    }
+
+
+                })
+                .catch(err => {
+                    console.error("请求失败:", err);
+                });
+        })
+    });
+</script>
+</body>
+</html>
