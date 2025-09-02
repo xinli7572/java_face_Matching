@@ -24,10 +24,10 @@ This project enables:
 ```
 ├── src/
 │ └── main/
-│ ├── java/com/yourapp/face/ # 人脸识别核心代码
+│ ├── java/com/yourapp/face/ #  Core face recognition code
 │ └── resources/
 ├── model/
-│ └── modelnew.onnx # 人脸识别模型（已修复）
+│ └── modelnew.onnx # Face recognition model (fixed)
 ├── pom.xml
 └── README.md
 ```
