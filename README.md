@@ -89,6 +89,16 @@ If the ONNX model input structure is incompatible with ONNX Runtime, use the off
 ```bash
 python remove_initializer_from_input.py --input modelnew2_onnx.onnx --output modelnew.onnx
 
+## 🧪 Validate ONNX Installation (Optional)
+
+Install or upgrade ONNX:
+
+```bash
+pip install --upgrade --force-reinstall onnx
+# or using conda
+conda install -c conda-forge onnx
+
+
 
 
 
