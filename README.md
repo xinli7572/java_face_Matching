@@ -74,5 +74,24 @@ This project enables:
     </dependency>
 </dependencies>
 
+### Step 5: Fix ONNX Model Inputs (if needed)
+
+If the ONNX model input structure is incompatible with ONNX Runtime, use the official Python script to fix it:
+
+**📥 Download the script:**
+
+👉 [remove_initializer_from_input.py](https://github.com/microsoft/onnxruntime/blob/main/tools/python/remove_initializer_from_input.py)
+
+**💡 Run the script:**
+
+```bash
+python remove_initializer_from_input.py --input modelnew2_onnx.onnx --output modelnew.onnx
+
+
+
+
+
+
+
 
 
