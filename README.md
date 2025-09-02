@@ -21,6 +21,7 @@ This project enables:
 
 ## 📁 Project Structure
 ---
+```
 ├── src/
 │ └── main/
 │ ├── java/com/yourapp/face/ # 人脸识别核心代码
@@ -29,7 +30,7 @@ This project enables:
 │ └── modelnew.onnx # 人脸识别模型（已修复）
 ├── pom.xml
 └── README.md
----
+```
 ---
 
 ## 🧰 Environment Setup & Installation Steps
