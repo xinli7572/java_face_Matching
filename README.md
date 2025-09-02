@@ -20,7 +20,7 @@ This project enables:
 ---
 
 ## 📁 Project Structure
-...
+---
 ├── src/
 │ └── main/
 │ ├── java/com/yourapp/face/ # 人脸识别核心代码
@@ -29,48 +29,50 @@ This project enables:
 │ └── modelnew.onnx # 人脸识别模型（已修复）
 ├── pom.xml
 └── README.md
-...
+---
+---
+
+## 🧰 Environment Setup & Installation Steps
+
+### Step 1: Install JDK
+
+1. Uninstall all existing JDK versions
+2. Download and install [OpenJDK 17](https://adoptium.net/zh-CN/download?link=https%3A%2F%2Fgithub.com%2Fadoptium%2Ftemurin17-binaries%2Freleases%2Fdownload%2Fjdk-17.0.16%252B8%2FOpenJDK17U-jdk_x64_windows_hotspot_17.0.16_8.msi&vendor=Adoptium)
+3. Set the `JAVA_HOME` environment variable to the new JDK installation path
 
 ---
 
-## 🧰 环境准备与安装步骤
+### Step 2: Install C++ Runtime (Required by ONNX Runtime)
 
-### 第一步：安装 JDK
-
-1. 卸载所有旧版 JDK
-2. 安装 [OpenJDK 17](https://adoptium.net/zh-CN/download?link=https%3A%2F%2Fgithub.com%2Fadoptium%2Ftemurin17-binaries%2Freleases%2Fdownload%2Fjdk-17.0.16%252B8%2FOpenJDK17U-jdk_x64_windows_hotspot_17.0.16_8.msi&vendor=Adoptium)
-3. 设置环境变量 `JAVA_HOME` 为新安装路径
+- Download and install [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist?view=msvc-170&utm_source=chatgpt.com)  
+  - Run the `VC_redist.x64.exe` installer
 
 ---
 
-### 第二步：安装 C++ 环境（用于 ONNX Runtime）
+### Step 3: Configure ONNX Runtime DLL
 
-- 下载并安装 [VC++ Redistributable](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist?view=msvc-170&utm_source=chatgpt.com)
-  - 下载并运行 `VC_redist.x64.exe`
-
----
-
-### 第三步：配置 ONNX Runtime DLL
-
-1. 下载 ONNX Runtime：
+1. Download ONNX Runtime:  
    [onnxruntime-win-x64-1.22.0.zip](https://github.com/microsoft/onnxruntime/releases?utm_source=chatgpt.com)
-2. 解压后，将 `onnxruntime.dll` 添加到系统 PATH 或项目资源路径
+2. Extract the archive and place the `onnxruntime.dll` file in either:
+   - a directory included in your system `PATH`, or
+   - your project’s resource or native library path
 
 ---
 
-### 第四步：创建 Maven 项目（如未使用该项目模板）
+### Step 4: Create a Maven Project (if you're not using this project template)
 
-1. IntelliJ IDEA 新建 Maven 项目
-2. 设置 `GroupId` 和 `ArtifactId`
-3. 修改 `pom.xml`：
+1. Create a new Maven project in IntelliJ IDEA
+2. Set the `GroupId` and `ArtifactId`
+3. Add the following to your `pom.xml`:
 
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.microsoft.onnxruntime</groupId>
         <artifactId>onnxruntime</artifactId>
-        <version>1.22.0</version> <!-- 必须与 DLL 匹配 -->
+        <version>1.22.0</version> <!-- Must match the downloaded DLL version -->
     </dependency>
 </dependencies>
+
 
 
