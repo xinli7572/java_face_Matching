@@ -73,7 +73,7 @@ This project enables:
         <version>1.22.0</version> <!-- Must match the downloaded DLL version -->
     </dependency>
 </dependencies>
-```xml
+
 ---
 
 ### Step 5: Fix ONNX Model Inputs (if needed)
