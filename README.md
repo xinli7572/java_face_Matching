@@ -99,6 +99,65 @@ pip install --upgrade --force-reinstall onnx
 conda install -c conda-forge onnx
 
 
+### Then test in Python:
+
+python -c "import onnx; print(onnx.ModelProto)"
+
+
+### Expected output:
+
+<class 'onnx.onnx_ml_pb2.ModelProto'>
+
+### 🚀 Run the Project
+
+Ensure your JDK configuration is consistent across your IDE.
+
+IntelliJ IDEA:
+
+File > Project Structure > Project > Project SDK
+
+File > Settings > Build, Execution, Deployment > Compiler > Java Compiler
+
+Run the application:
+mvn spring-boot:run
+
+
+Or run the main class directly from IntelliJ.
+
+### 🧠 Model Information
+
+Uses lightweight MobileFaceNet ONNX model
+
+Suitable for embedded systems and server-side deployment
+
+Outputs 512-dimensional feature vectors for similarity comparison
+
+### 📦 Dependencies
+
+Java 17
+
+Maven
+
+ONNX Runtime 1.22.0 (Java API)
+
+Microsoft VC++ Redistributable
+
+MobileFaceNet ONNX model
+
+### 🔗 Useful Resources
+
+ONNX Runtime Documentation
+
+InsightFace GitHub
+
+ONNX Model Zoo
+
+### 📜 License
+
+This project is licensed under the MIT License
+.
+
+
 
 
 
